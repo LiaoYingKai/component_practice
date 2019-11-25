@@ -1,0 +1,38 @@
+{
+	"name": "calander",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "webpack-dev-server --devtool eval --progress --colors --content-base --hot",
+		"build": "webpack"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"eslint": "^6.7.1",
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.7.4",
+		"@babel/node": "^7.7.4",
+		"@babel/plugin-syntax-dynamic-import": "^7.7.4",
+		"@babel/preset-env": "^7.7.4",
+		"@babel/preset-react": "^7.7.4",
+		"babel-eslint": "^10.0.3",
+		"babel-loader": "^8.0.6",
+		"css-loader": "^3.2.0",
+		"eslint-plugin-async-await": "0.0.0",
+		"eslint-plugin-react": "^7.16.0",
+		"eslint-plugin-react-hooks": "^2.3.0",
+		"html-webpack-plugin": "^3.2.0",
+		"node-sass": "^4.13.0",
+		"sass-loader": "^8.0.0",
+		"style-loader": "^1.0.0",
+		"webpack": "^4.41.2",
+		"webpack-cli": "^3.3.10",
+		"webpack-dev-server": "^3.9.0"
+	}
+}
