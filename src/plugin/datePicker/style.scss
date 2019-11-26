@@ -52,6 +52,9 @@
 					text-align: center;
 					height: 34px;
 					line-height: 34px;
+					&:hover {
+						@include selected-style(34px);
+					}
 				}
 				&-week {
 					font-weight: 500;
@@ -77,6 +80,10 @@
 				justify-items: center;
 				> div {
 					cursor: pointer;
+					text-align: center;
+					&:hover {
+						@include selected-style(50px);
+					}
 				}
 				&-selected {
 					@include selected-style(50px);
