@@ -1,3 +1,14 @@
+@mixin header-style($flex-basis) {
+	flex-basis: $flex-basis;
+	text-align: center;
+	line-height: 32px;
+	border-radius: 5px;
+	cursor: pointer;
+	&:hover {
+		background-color: #e8e8e8;
+	}
+}
+
 .date-picker {
 	&__calendar {
 		display: none;
@@ -15,18 +26,14 @@
 			justify-content: space-between;
 			align-items: center;
 			> div {
-				flex-basis: 100%;
-				text-align: center;
-				background-color: #e8e8e8;
-				line-height: 32px;
-				border-radius: 5px;
-				cursor: pointer;
+				@include header-style(100%);
 			}
 			> span {
-				flex-basis: 40px;
-				text-align: center;
-				cursor: pointer;
+				@include header-style(40px);
 			}
+		}
+		&-body {
+			padding: 10px 0;
 		}
 	}
 }
