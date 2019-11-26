@@ -84,13 +84,12 @@ const {
 function DatePicker({
 	className,
 }) {
-	const today = new Date();
-	const [year, setYear] = useState(today.getFullYear());
-	const [month, setMonth] = useState(today.getMonth() + 1);
-	const [date, setDate] = useState(today.getDate());
+	const [day, setDay] = useState(new Date());
+	const [year, setYear] = useState(day.getFullYear());
+	const [month, setMonth] = useState(day.getMonth() + 1);
+	const [date, setDate] = useState(day.getDate());
 	const [calendarVisible, setCalendarVisable] = useState(true);
 	const [mode, setMode] = useState(DATE);
-	// const [bodyArray, setBodyArray] = useState([]);
 	const calendarMode = {
 		[DATE]: {
 			optionsClick: changeMonth,
@@ -181,7 +180,12 @@ function DatePicker({
 			} else {
 				className = `${PREFIX_CLASS}__calendar-body--date-this-month`;
 			}
-			calendarArray.push(<div className={className}>{i}</div>);
+			calendarArray.push(
+				<div 
+					className={className}
+					onClick={() => selectDate(year, month, i)}
+				>{i}</div>
+			);
 		}
 
 		do {
@@ -201,6 +205,11 @@ function DatePicker({
 			</div>
 		);
 	}
+	function selectDate(year, month, date) {
+		setDate(date);
+		setDay(new Date(`${year}/${month}/${date}`));
+		// setCalendarVisable(false);
+	}
 	function _renderMonth() {
 		return (
 			<div className={`${PREFIX_CLASS}__calendar-body--month`}>
@@ -219,9 +228,10 @@ function DatePicker({
 	return (
 		<div className={cx(PREFIX_CLASS, className)}>
 			<input 
-				defaultValue={today}
+				value={day}
 				onClick={() => {setCalendarVisable(true);}}
-				onBlur={() => {setCalendarVisable(false);}}
+				// onBlur={() => {setCalendarVisable(false);}}
+				readOnly={true}
 			></input>
 			<div className={cx(
 				`${PREFIX_CLASS}__calendar`,
