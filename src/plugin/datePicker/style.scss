@@ -8,11 +8,20 @@
 		background-color: #e8e8e8;
 	}
 }
+@mixin selected-style($length) {
+	border-radius: 50%;
+	background-color: #f44336;
+	width: $length;
+	height: $length;
+	line-height: $length;
+	display: inline-block;
+	color: #fff;
+}
 
 .date-picker {
 	&__calendar {
 		display: none;
-		width: 300px;
+		width: 270px;
 		border: 1px solid gray;
 		padding: 10px;
 		border-radius: 5px;
@@ -34,13 +43,15 @@
 		}
 		&-body {
 			padding: 10px 0;
+			height: 248px;
+			box-sizing: border-box;
 			&--date {
 				display: grid;
 				grid-template-columns: repeat(7, 1fr);
 				> div {
 					text-align: center;
-					height: 39px;
-					line-height: 39px;
+					height: 34px;
+					line-height: 34px;
 				}
 				&-week {
 					font-weight: 500;
@@ -53,16 +64,24 @@
 					cursor: pointer;
 				}
 				&-selected {
-					border-radius: 50%;
-					background-color: #f44336;
-					width: 39px;
-					height: 39px;
-					display: inline-block;
-					color: #fff;
+					@include selected-style(34px);
+
 				}
 			}
 			&--month {
-
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				grid-auto-rows: 1fr;
+				height: 100%;
+				align-items: center;
+				justify-items: center;
+				> div {
+					cursor: pointer;
+				}
+				&-selected {
+					@include selected-style(50px);
+					text-align: center;
+				}
 			}
 			&--year {
 

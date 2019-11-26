@@ -211,9 +211,25 @@ function DatePicker({
 		// setCalendarVisable(false);
 	}
 	function _renderMonth() {
+		function _handelClick(index) {
+			setMonth(index + 1);
+			setMode(DATE);
+		}
+
 		return (
 			<div className={`${PREFIX_CLASS}__calendar-body--month`}>
-				month
+				{
+					Object.values(MonthEnums).map((monthEnum, index) => {
+						const className = index + 1 === month ? `${PREFIX_CLASS}__calendar-body--month-selected`: null;
+						return  (
+							<div
+								key={monthEnum.month}
+								className={className}
+								onClick={() => _handelClick(index)}
+							>{monthEnum.month}</div>
+						);
+					})
+				}
 			</div>
 		);
 	}
