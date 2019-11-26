@@ -12,7 +12,7 @@
 .date-picker {
 	&__calendar {
 		display: none;
-		width: 270px;
+		width: 300px;
 		border: 1px solid gray;
 		padding: 10px;
 		border-radius: 5px;
@@ -34,6 +34,39 @@
 		}
 		&-body {
 			padding: 10px 0;
+			&--date {
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				> div {
+					text-align: center;
+					height: 39px;
+					line-height: 39px;
+				}
+				&-week {
+					font-weight: 500;
+				}
+				&-disable {
+					color: #e8e8e8;
+					cursor: not-allowed;
+				}
+				&-this-month {
+					cursor: pointer;
+				}
+				&-selected {
+					border-radius: 50%;
+					background-color: red;
+					width: 39px;
+					height: 39px;
+					display: inline-block;
+					color: #fff;
+				}
+			}
+			&--month {
+
+			}
+			&--year {
+
+			}
 		}
 	}
 }
