@@ -20,6 +20,18 @@ function DatePicker({
 
 	const [calendarVisible, setCalendarVisable] = useState(true);
 	
+	function changeMonth(event) {
+		if (month + event === 12) {
+			setYear(year + 1);
+			setMonth(0);
+		} else if (month + event === -1) {
+			setYear(year - 1);
+			setMonth(11);
+		} else {
+			setMonth(month + event);
+		}
+	}
+
 	return (
 		<div className={cx(PREFIX_CLASS, className)}>
 			<input 
@@ -32,11 +44,11 @@ function DatePicker({
 				{ [`${PREFIX_CLASS}__calendar--visible`]: calendarVisible }
 			)}>
 				<div className={`${PREFIX_CLASS}__calendar-header`}>
-					<span> &lt; </span>
+					<span onClick={() => {changeMonth(-1);}}> &lt; </span>
 					<div>
 						{MONTH[month]} {year}
 					</div>
-					<span> &gt; </span>
+					<span onClick={() => {changeMonth(1);}}> &gt; </span>
 				</div>
 				<div className={`${PREFIX_CLASS}__calendar-body`}>改變的區塊</div>
 			</div>
