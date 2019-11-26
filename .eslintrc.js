@@ -29,7 +29,6 @@ module.exports = {
 		"semi": "error",
 		"indent": ["error", "tab", {"SwitchCase": 1}],
 		"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
-		"newline-after-var": "error",
 		"object-curly-spacing": ["error", "always"],
 		"keyword-spacing": "error",
 		"space-in-parens": ["error", "never"],
