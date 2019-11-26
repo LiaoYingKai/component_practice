@@ -1,0 +1,31 @@
+.date-picker {
+	&__calendar {
+		display: none;
+		width: 270px;
+		border: 1px solid gray;
+		padding: 10px;
+		border-radius: 5px;
+		box-sizing: border-box;
+
+		&--visible {
+			display: block;
+		}
+		&-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			> div {
+				flex-basis: 100%;
+				text-align: center;
+				background-color: #e8e8e8;
+				line-height: 32px;
+				border-radius: 5px;
+			}
+			> span {
+				flex-basis: 40px;
+				text-align: center;
+				cursor: pointer;
+			}
+		}
+	}
+}
