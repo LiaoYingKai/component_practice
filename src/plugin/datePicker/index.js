@@ -33,17 +33,17 @@ function DatePicker({
 		[DATE]: {
 			optionsClick: changeMonth,
 			header: `${MonthEnums[month]} ${year}`,
-			body: '',
+			body: _renderDate(),
 		},
 		[MONTH]: {
 			optionsClick: changeYear,
 			header: `${year}`,
-			body: '',
+			body: _renderMonth(),
 		},
 		[YEAR]: {
-			optionsClick: () => {},
+			optionsClick: changeYearRange,
 			header: `year Range`,
-			body: '',
+			body: _renderYear(),
 		},
 	};
 
@@ -83,6 +83,29 @@ function DatePicker({
 	function changeYearRange(event) {
 
 	}
+
+	function _renderDate() {
+		return (
+			<>
+				date
+			</>
+		);
+	}
+	function _renderMonth() {
+		return (
+			<>
+				month
+			</>
+		);
+	}
+	function _renderYear() {
+		return (
+			<>
+				year
+			</>
+		);
+	}
+
 	return (
 		<div className={cx(PREFIX_CLASS, className)}>
 			<input 
@@ -96,12 +119,12 @@ function DatePicker({
 			)}>
 				<div className={`${PREFIX_CLASS}__calendar-header`}>
 					<span onClick={() => {calendarMode[mode].optionsClick(-1);}}> &lt; </span>
-					<div onClick={changeMode}>
-						{calendarMode[mode].header}
-					</div>
+					<div onClick={changeMode}> {calendarMode[mode].header} </div>
 					<span onClick={() => {calendarMode[mode].optionsClick(1);}}> &gt; </span>
 				</div>
-				<div className={`${PREFIX_CLASS}__calendar-body`}>改變的區塊</div>
+				<div className={`${PREFIX_CLASS}__calendar-body`}>
+					{calendarMode[mode].body}
+				</div>
 			</div>
 		</div>
 	);
