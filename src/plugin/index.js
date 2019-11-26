@@ -1,16 +1,17 @@
 import React, { useState, } from 'react';
+import DatePicker from './datePicker';
 import PropTypes from 'prop-types';
 
 const propTypes = {};
 
-function DatePicker() {
+function Main() {
 	return (
 		<div>
-			<input></input>
+			<DatePicker/>
 		</div>
 	);
 }
 
-DatePicker.propTypes = propTypes;
+Main.propTypes = propTypes;
 
-export default DatePicker;
+export default Main;
