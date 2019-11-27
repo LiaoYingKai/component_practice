@@ -8,6 +8,7 @@ const PREFIX_CLASS = 'date-picker';
 
 const propTypes = {
 	className: PropTypes.string,
+	onSelect: PropTypes.func,
 };
 
 const {
@@ -18,6 +19,7 @@ const {
 
 function DatePicker({
 	className,
+	onSelect,
 }) {
 	const [day, setDay] = useState(new Date());
 	const [year, setYear] = useState(day.getFullYear());
@@ -149,9 +151,11 @@ function DatePicker({
 		}
 	}
 	function _handelSelectDate(year, month, date) {
+		const selectedDate = new Date(`${year}/${month}/${date}`);
 		setDate(date);
-		setDay(new Date(`${year}/${month}/${date}`));
-		// setCalendarVisable(false);
+		setDay(selectedDate);
+		onSelect(selectedDate);
+		setCalendarVisable(false);
 	}
 
 	// MonthMode
@@ -228,6 +232,12 @@ function DatePicker({
 		setMode(MONTH);
 	}
 
+	function _handleConvertDateFormat() {
+		const year = day.getFullYear();
+		const month = day.getMonth() + 1;
+		const date = day.getDate();
+		return `${year}-${month}-${date}`;
+	}
 	useEffect(() => {
 		const range = Math.floor(year /10) * 10;
 		setYearRange([range, range + 9]);
@@ -236,7 +246,7 @@ function DatePicker({
 	return (
 		<div className={cx(PREFIX_CLASS, className)}>
 			<input 
-				value={day}
+				value={_handleConvertDateFormat()}
 				onClick={() => {setCalendarVisable(true);}}
 				readOnly={true}
 			></input>

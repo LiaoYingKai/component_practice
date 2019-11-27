@@ -7,7 +7,9 @@ const propTypes = {};
 function Main() {
 	return (
 		<div>
-			<DatePicker/>
+			<DatePicker
+				onSelect={(date) => {console.log(date);}}
+			/>
 		</div>
 	);
 }
