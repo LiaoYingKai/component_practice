@@ -21,30 +21,30 @@ function DatePicker({
 }) {
 	const [day, setDay] = useState(new Date());
 	const [year, setYear] = useState(day.getFullYear());
-	const [yearRange, setYearRange] = useState([]);
 	const [month, setMonth] = useState(day.getMonth() + 1);
 	const [date, setDate] = useState(day.getDate());
-	const [calendarVisible, setCalendarVisable] = useState(true);
+	const [yearRange, setYearRange] = useState([]);
 	const [mode, setMode] = useState(DATE);
-	const calendarMode = {
+	const [calendarVisible, setCalendarVisable] = useState(true);
+	const CalendarMode = {
 		[DATE]: {
-			optionsClick: changeMonthAtDateMode,
-			header: `${MonthEnums[month].month} ${year}`,
-			body: _renderDateMode(),
+			optionsClick: _handleChangeDateModeBody,
+			header: _renderDateModeHeaderText(),
+			body: _renderDateModeBody(),
 		},
 		[MONTH]: {
-			optionsClick: changeYearAtMonthMode,
-			header: `${year}`,
-			body: _renderMonthMode(),
+			optionsClick: _handleChangeMonthModeBody,
+			header: _renderMonthModeHeaderText(),
+			body: _renderMonthModeBody(),
 		},
 		[YEAR]: {
-			optionsClick: changeYearRangeAtYearMode,
-			header: `${yearRange[0]} - ${yearRange[1]}`,
-			body: _renderYearMode(),
+			optionsClick: _handleChangeYearModeBody,
+			header: _renderYearModeHeaderText(),
+			body: _renderYearModeBody(),
 		},
 	};
 
-	function changeMode() {
+	function _handleChangeMode() {
 		switch (mode) {
 			case DATE: {
 				setMode(MONTH);
@@ -64,14 +64,17 @@ function DatePicker({
 		}
 	}
 
-	function _renderDateMode() {
+	function _renderDateModeHeaderText() {
+		return `${MonthEnums[month].month} ${year}`;
+	}
+	function _renderDateModeBody() {
 		// TODO 處理潤月的問題
 		// TODO 處理要滿 42 個日期
-		const days = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+		const weeks = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 		let nextYear = year;
+		let nextMonth = month;
 		let prevYear = year;
 		let prevMonth = month;
-		let nextMonth = month;
 		if (prevMonth - 1 === 0) {
 			prevMonth = 12;
 			prevYear = prevYear - 1;
@@ -96,14 +99,14 @@ function DatePicker({
 		for (let i = 1; i <= MonthEnums[month].days; i++) {
 			let className = '';
 			if (i === date) {
-				className = `${PREFIX_CLASS}__calendar-body--date-this-month ${PREFIX_CLASS}__calendar-body--date-selected`
+				className = `${PREFIX_CLASS}__calendar-body--date-this-month ${PREFIX_CLASS}__calendar-body--date-selected`;
 			} else {
 				className = `${PREFIX_CLASS}__calendar-body--date-this-month`;
 			}
 			calendarArray.push(
 				<div 
 					className={className}
-					onClick={() => selectDate(year, month, i)}
+					onClick={() => _handelSelectDate(year, month, i)}
 				>{i}</div>
 			);
 		}
@@ -113,7 +116,7 @@ function DatePicker({
 			nextMonthFirstDate++;
 		} while (new Date(`${nextYear}/${nextMonth}/${nextMonthFirstDate}`).getDay() != 0);
 
-		days.forEach(day => {
+		weeks.forEach(day => {
 			calendarArray.unshift(<div className={`${PREFIX_CLASS}__calendar-body--date-week`}>{day}</div>);
 		});
 
@@ -125,12 +128,7 @@ function DatePicker({
 			</div>
 		);
 	}
-	function selectDate(year, month, date) {
-		setDate(date);
-		setDay(new Date(`${year}/${month}/${date}`));
-		// setCalendarVisable(false);
-	}
-	function changeMonthAtDateMode(event) {
+	function _handleChangeDateModeBody(event) {
 		if (month + event === 13) {
 			setYear(year + 1);
 			setMonth(1);
@@ -141,8 +139,16 @@ function DatePicker({
 			setMonth(month + event);
 		}
 	}
+	function _handelSelectDate(year, month, date) {
+		setDate(date);
+		setDay(new Date(`${year}/${month}/${date}`));
+		// setCalendarVisable(false);
+	}
 
-	function _renderMonthMode() {
+	function _renderMonthModeHeaderText() {
+		return year;
+	}
+	function _renderMonthModeBody() {
 		return (
 			<div className={`${PREFIX_CLASS}__calendar-body--month`}>
 				{
@@ -152,7 +158,7 @@ function DatePicker({
 							<div
 								key={monthEnum.month}
 								className={className}
-								onClick={() => selectMonth(index)}
+								onClick={() => _handleSelectMonth(index)}
 							>{monthEnum.month}</div>
 						);
 					})
@@ -160,15 +166,18 @@ function DatePicker({
 			</div>
 		);
 	}
-	function selectMonth(index) {
+	function _handleChangeMonthModeBody(event) {
+		setYear(year + event);
+	}
+	function _handleSelectMonth(index) {
 		setMonth(index + 1);
 		setMode(DATE);
 	}
-	function changeYearAtMonthMode(event) {
-		setYear(year + event);
-	}
 
-	function _renderYearMode() {
+	function _renderYearModeHeaderText() {
+		return `${yearRange[0]} - ${yearRange[1]}`;
+	}
+	function _renderYearModeBody() {
 		if (yearRange.length === 0) return;
 		const yearRangeArray = [];
 		yearRangeArray.push(<div className={`${PREFIX_CLASS}__calendar-body--year-disable`}>{yearRange[0] - 1}</div>);
@@ -178,7 +187,7 @@ function DatePicker({
 			yearRangeArray.push(
 				<div
 					className={className}
-					onClick={() => {selectYear(i);}}
+					onClick={() => {_handleSelectYear(i);}}
 				>
 					{i}
 				</div>
@@ -198,12 +207,12 @@ function DatePicker({
 			</div>
 		);
 	}
-	function selectYear(year) {
+	function _handleChangeYearModeBody(event) {
+		setYear(year + 10 * event);
+	}
+	function _handleSelectYear(year) {
 		setYear(year);
 		setMode(DATE);
-	}
-	function changeYearRangeAtYearMode(event) {
-		setYear(year + 10 * event);
 	}
 
 	useEffect(() => {
@@ -223,12 +232,12 @@ function DatePicker({
 				{ [`${PREFIX_CLASS}__calendar--visible`]: calendarVisible }
 			)}>
 				<div className={`${PREFIX_CLASS}__calendar-header`}>
-					<span onClick={() => {calendarMode[mode].optionsClick(-1);}}> &lt; </span>
-					<div onClick={changeMode}> {calendarMode[mode].header} </div>
-					<span onClick={() => {calendarMode[mode].optionsClick(1);}}> &gt; </span>
+					<span onClick={() => {CalendarMode[mode].optionsClick(-1);}}> &lt; </span>
+					<div onClick={_handleChangeMode}> {CalendarMode[mode].header} </div>
+					<span onClick={() => {CalendarMode[mode].optionsClick(1);}}> &gt; </span>
 				</div>
 				<div className={`${PREFIX_CLASS}__calendar-body`}>
-					{calendarMode[mode].body}
+					{CalendarMode[mode].body}
 				</div>
 			</div>
 		</div>
