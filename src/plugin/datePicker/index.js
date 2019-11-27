@@ -27,7 +27,9 @@ function DatePicker({
 	const [date, setDate] = useState(day.getDate());
 	const [yearRange, setYearRange] = useState([]);
 	const [mode, setMode] = useState(DATE);
-	const [calendarVisible, setCalendarVisable] = useState(true);
+	const [calendarVisible, setCalendarVisable] = useState(false);
+	const [isFocus, setIsFocus] = useState(true);
+	const [inDiv, setInDiv] = useState(true);
 	const CalendarMode = {
 		[DATE]: {
 			optionsClick: _handleChangeDateModeBody,
@@ -234,8 +236,8 @@ function DatePicker({
 
 	function _handleConvertDateFormat() {
 		const year = day.getFullYear();
-		const month = day.getMonth() + 1;
-		const date = day.getDate();
+		const month = day.getMonth() + 1 >= 10 ? day.getMonth() + 1 : `0${day.getMonth() + 1}`;
+		const date = day.getDate() >= 10 ? day.getDate() : `0${day.getDate()}`;
 		return `${year}-${month}-${date}`;
 	}
 	useEffect(() => {
@@ -243,8 +245,20 @@ function DatePicker({
 		setYearRange([range, range + 9]);
 	}, [year]);
 
+	useEffect(() => {
+		if (!isFocus && !inDiv) {
+			setCalendarVisable(false);
+		}
+	},[isFocus, inDiv]);
+
 	return (
-		<div className={cx(PREFIX_CLASS, className)}>
+		<div
+			className={cx(PREFIX_CLASS, className)}
+			onFocus={() => {setIsFocus(true);}}
+			onBlur={() => {setIsFocus(false);}}
+			onMouseEnter={() => {setInDiv(true);}}
+			onMouseLeave={() => {setInDiv(false);}}
+		>
 			<input 
 				value={_handleConvertDateFormat()}
 				onClick={() => {setCalendarVisable(true);}}

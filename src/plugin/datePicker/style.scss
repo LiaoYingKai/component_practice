@@ -19,7 +19,15 @@
 }
 
 .date-picker {
+	position: relative;
+	display: inline-block;
+	input {
+		text-align: center;
+		padding: 5px 10px;
+		font-size: 14px;
+	}
 	&__calendar {
+		position: absolute;
 		display: none;
 		width: 270px;
 		border: 1px solid gray;
