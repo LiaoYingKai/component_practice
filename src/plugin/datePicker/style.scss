@@ -71,14 +71,15 @@
 
 				}
 			}
-			&--month {
+			&--month,
+			&--year {
 				display: grid;
 				grid-template-columns: repeat(4, 1fr);
 				grid-auto-rows: 1fr;
 				height: 100%;
 				align-items: center;
 				justify-items: center;
-				> div {
+				> div:not(.date-picker__calendar-body--year-disable) {
 					cursor: pointer;
 					text-align: center;
 					&:hover {
@@ -91,7 +92,10 @@
 				}
 			}
 			&--year {
-
+				&-disable {
+					color: #e8e8e8;
+					cursor: not-allowed;
+				}
 			}
 		}
 	}
