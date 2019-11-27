@@ -64,15 +64,25 @@ function DatePicker({
 		}
 	}
 
+	// DateMode
 	function _renderDateModeHeaderText() {
 		return `${MonthEnums[month].month} ${year}`;
 	}
 	function _renderDateModeBody() {
-		// TODO 處理潤月的問題
 		// TODO 處理要滿 42 個日期
 		const weeks = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+		const calendarArray = [];
+
 		let nextYear = year;
 		let nextMonth = month;
+		let nextMonthFirstDate = 1;
+		if (nextMonth + 1 > 12) {
+			nextMonth = 1;
+			nextYear = nextYear + 1;
+		} else {
+			nextMonth = nextMonth + 1;
+		}
+
 		let prevYear = year;
 		let prevMonth = month;
 		if (prevMonth - 1 === 0) {
@@ -81,22 +91,22 @@ function DatePicker({
 		} else {
 			prevMonth = prevMonth - 1;
 		}
-		if (nextMonth + 1 > 12) {
-			nextMonth = 1;
-			nextYear = nextYear + 1;
-		} else {
-			nextMonth = nextMonth + 1;
-		}
 		let prevMonthLastDate = MonthEnums[prevMonth].days;
-		let nextMonthFirstDate = 1;
-		const calendarArray = [];
+		if (prevYear % 4 === 0 && prevMonth === 2) {
+			prevMonthLastDate++;
+		}
+
+		let thisMonthDays = MonthEnums[month].days;
+		if (year % 4 === 0 && month === 2) {
+			thisMonthDays++;
+		}
 
 		do {
 			calendarArray.unshift(<div className={`${PREFIX_CLASS}__calendar-body--date-disable`}>{prevMonthLastDate}</div>);
 			prevMonthLastDate--;
 		} while (new Date(`${prevYear}/${prevMonth}/${prevMonthLastDate}`).getDay() != 6);
 
-		for (let i = 1; i <= MonthEnums[month].days; i++) {
+		for (let i = 1; i <= thisMonthDays; i++) {
 			let className = '';
 			if (i === date) {
 				className = `${PREFIX_CLASS}__calendar-body--date-this-month ${PREFIX_CLASS}__calendar-body--date-selected`;
@@ -145,6 +155,7 @@ function DatePicker({
 		// setCalendarVisable(false);
 	}
 
+	// MonthMode
 	function _renderMonthModeHeaderText() {
 		return year;
 	}
@@ -174,6 +185,7 @@ function DatePicker({
 		setMode(DATE);
 	}
 
+	// YearMode
 	function _renderYearModeHeaderText() {
 		return `${yearRange[0]} - ${yearRange[1]}`;
 	}
