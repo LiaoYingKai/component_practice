@@ -169,7 +169,9 @@ function DatePicker({
 								key={monthEnum.month}
 								className={className}
 								onClick={() => _handleSelectMonth(index)}
-							>{monthEnum.month}</div>
+							> 
+								<div>{monthEnum.month}</div>
+							</div>
 						);
 					})
 				}

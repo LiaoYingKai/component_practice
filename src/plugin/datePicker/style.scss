@@ -52,8 +52,10 @@
 					text-align: center;
 					height: 34px;
 					line-height: 34px;
-					&:hover {
-						@include selected-style(34px);
+					.date-picker__calendar-body--date-this-month {
+						&:hover {
+							@include selected-style(34px);
+						}
 					}
 				}
 				&-week {
@@ -79,12 +81,15 @@
 				height: 100%;
 				align-items: center;
 				justify-items: center;
-				> div:not(.date-picker__calendar-body--year-disable) {
+				> div {
 					cursor: pointer;
 					text-align: center;
-					&:hover {
-						@include selected-style(50px);
+					> div {
+						&:hover:not(.date-picker__calendar-body--year-disable) {
+							@include selected-style(50px);
+						}
 					}
+					
 				}
 				&-selected {
 					@include selected-style(50px);
