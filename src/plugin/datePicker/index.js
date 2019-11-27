@@ -69,7 +69,6 @@ function DatePicker({
 		return `${MonthEnums[month].month} ${year}`;
 	}
 	function _renderDateModeBody() {
-		// TODO 處理要滿 42 個日期
 		const weeks = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 		const calendarArray = [];
 
@@ -124,7 +123,7 @@ function DatePicker({
 		do {
 			calendarArray.push(<div className={`${PREFIX_CLASS}__calendar-body--date-disable`}>{nextMonthFirstDate}</div>);
 			nextMonthFirstDate++;
-		} while (new Date(`${nextYear}/${nextMonth}/${nextMonthFirstDate}`).getDay() != 0);
+		} while ((new Date(`${nextYear}/${nextMonth}/${nextMonthFirstDate}`).getDay() != 0) || (calendarArray.length != 42));
 
 		weeks.forEach(day => {
 			calendarArray.unshift(<div className={`${PREFIX_CLASS}__calendar-body--date-week`}>{day}</div>);
@@ -224,7 +223,7 @@ function DatePicker({
 	}
 	function _handleSelectYear(year) {
 		setYear(year);
-		setMode(DATE);
+		setMode(MONTH);
 	}
 
 	useEffect(() => {
